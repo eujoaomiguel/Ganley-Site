@@ -1,0 +1,285 @@
+h1 {
+    color: rgb(0, 0, 0);
+    text-align: center;
+}
+h2 {
+    color: rgb(255, 255, 255);
+}
+
+p {
+    color: white;
+}
+a {
+    color:rgb(255, 255, 255)
+}
+ *{
+        margin: 0;
+    }
+
+ /* Wake Wake*/
+
+.topo{
+    background-color:white ;
+    padding: 40px;
+}
+/* links*/
+
+   .links{
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+     
+}
+
+.links a{
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+
+     width: 200px;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0;
+}
+.essencia{
+    float:left;
+    width:50%;
+    padding: 15px;
+}
+
+/*       SITE GANLEY 2/FREAK          */
+
+.Freak{
+     background-color:white ;
+    padding: 40px;
+}
+.link2{
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+     
+}
+
+.link2 a{
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+
+     width: 200px;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0;
+}
+.aberracao{
+    float:right;
+    width:50%;
+    padding: 15px;
+}
+.img-freak{
+    display: block;
+    margin: 0 auto;
+}
+
+/*       INTEGRAL        */
+
+.integral{
+    background-color:white ;
+    padding: 40px;
+}
+.int-menu{
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+     
+}
+
+.int-menu a{
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+
+     width: 200px;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0;
+}
+.int-text{
+     float:left;
+    width:50%;
+    padding: 15px;
+}
+
+/*       CFF        */
+
+.fundo {
+    min-height: 100vh;
+    width: 100%;
+    background-image: url('img/cff.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+nav {
+    text-align: center;
+}
+
+.compra{
+     background-color: green;
+    color: white;
+    padding: 18px 30px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 16px;
+    display: inline-block;
+    text-align: center;
+        margin-top: 40%;
+}
+
+.insta{
+    display: inline-block;
+    position: relative;
+    top: 28px;
+    margin-left: 15px;
+}
+.insta img{
+    width: 65px;
+    height: auto;
+}
+.yout{
+    display: inline-block;
+    position: relative;
+    top: 34px;
+    margin-right: 20px;
+}
+.yout img{
+    width: 80px;
+    height: auto;
+}
+
+.paginas{
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    width: 100%;
+    margin-top: 20px;
+}
+.paginas a{
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    padding: 10px 20px;
+
+     width: 300px;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+
+    margin: 0;
+}
+/*       BERZERK        */
+.bloco {
+    width: 100%;
+    height: 300px;
+}
+
+.bloco img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+/*       CAMISAS        */
+.camisas{
+    text-align: center;
+    width: 100%;
+     top: 150px;
+}
+.briga{
+    display: inline-block;
+    position: relative;
+    margin-left: 50px;
+}
+.briga img{
+    width: 400px;
+    height: auto;
+}
+.wake{
+    display: inline-block;
+    position: relative;
+    margin-left: 50px;
+}
+.wake img{
+    width: 400px;
+    height: auto;
+}
+.freak-off{
+    display: inline-block;
+    position: relative;
+    margin-left: 50px;
+}
+.freak-off img{
+    width: 421px;
+    height: auto;
+}
+.berz-bar{
+    background-color: #d40000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    width: 100%;
+     margin-top: 170px;
+}
+.berz-bar a{
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    padding: 10px 20px;
+
+     width: 300px;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+
+    margin: 0;
+}
+.berz-rodape {
+    background-color: black;
+    text-align: center;
+    padding: 60px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 20px;
+}
+
+.berz-direitos {
+    background-color: #d40000;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    width: 100%;
+}
