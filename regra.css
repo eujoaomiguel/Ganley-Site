@@ -132,7 +132,7 @@ a {
 .fundo {
     min-height: 100vh;
     width: 100%;
-    background-image: url('img/cff.png');
+    background-image: url('cff.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
