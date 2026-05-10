@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Integral × Ganley — Freak Season</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --color-bg:           #111111;
+      --color-bg-secondary: #1a1a1a;
+      --color-bg-card:      #1e1e1e;
+      --color-accent:       #e84040;
+      --color-accent-hover: #c73232;
+      --color-text:         #ffffff;
+      --color-text-muted:   #888888;
+      --color-text-subtle:  #444444;
+      --color-border:       #2a2a2a;
+      --color-image-bg:     #1e1e1e;
+
+      --font-display: 'Barlow Condensed', sans-serif;
+      --font-body:    'Barlow', sans-serif;
+
+      --fs-eyebrow:    0.7rem;
+      --fs-hero-title: clamp(3.5rem, 10vw, 7rem);
+      --fs-section:    clamp(2rem, 5vw, 3.2rem);
+      --fs-small:      0.8rem;
+
+      --space-xs:  0.5rem;
+      --space-sm:  1rem;
+      --space-md:  2rem;
+      --space-lg:  4rem;
+      --space-xl:  6rem;
+
+      --container-width: 1100px;
+      --container-pad:   1.5rem;
+      --nav-height:      64px;
+      --radius-sm: 4px;
+      --radius-md: 10px;
+      --transition: 0.2s ease;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--color-bg);
+      color: var(--color-text);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { display: block; max-width: 100%; }
+    a   { color: inherit; text-decoration: none; }
+
+    .container {
+      max-width: var(--container-width);
+      margin-inline: auto;
+      padding-inline: var(--container-pad);
+    }
+
+    .eyebrow {
+      font-family: var(--font-display);
+      font-size: var(--fs-eyebrow);
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+    }
+
+    .tag-pill {
+      display: inline-block;
+      background: var(--color-accent);
+      color: #fff;
+      font-family: var(--font-display);
+      font-size: 0.6rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 3px 7px;
+      border-radius: var(--radius-sm);
+      vertical-align: middle;
+      margin-left: 6px;
+    }
+
+    .btn-cff {
+      background: transparent;
+      color: var(--color-accent);
+      border: 1.5px solid var(--color-accent);
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.45rem 1rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: background var(--transition), color var(--transition);
+    }
+    .btn-cff:hover { background: var(--color-accent); color: #fff; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      font-family: var(--font-display);
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      padding: 0.75rem 1.5rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      border: none;
+      transition: background var(--transition), color var(--transition), transform var(--transition);
+    }
+    .btn:active { transform: scale(0.97); }
+    .btn-primary { background: var(--color-accent); color: #fff; }
+    .btn-primary:hover { background: var(--color-accent-hover); }
+    .btn-outline {
+      background: transparent;
+      color: var(--color-text);
+      border: 1.5px solid var(--color-text-muted);
+    }
+    .btn-outline:hover { border-color: var(--color-text); }
+
+    .img-placeholder {
+      background: var(--color-image-bg);
+      border-radius: var(--radius-sm);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding-bottom: var(--space-sm);
+      color: var(--color-text-subtle);
+      font-size: var(--fs-small);
+      position: relative;
+      overflow: hidden;
+      gap: 4px;
+    }
+    .img-placeholder::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--color-accent);
+    }
+
+    /* ---- NAVBAR ---- */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      height: var(--nav-height);
+      background: var(--color-bg);
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      align-items: center;
+    }
+    .navbar .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+    .nav-brand {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 1.35rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.85rem;
+      color: var(--color-text-muted);
+      transition: color var(--transition);
+    }
+    .nav-links a:hover  { color: var(--color-text); }
+    .nav-links a.active { color: var(--color-accent); font-weight: 600; }
+
+    /* ---- HERO ---- */
+    .hero {
+      background: var(--color-bg-secondary);
+      border-bottom: 4px solid var(--color-accent);
+      padding-block: var(--space-xl);
+    }
+    .hero .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-lg);
+      align-items: center;
+    }
+    .hero-back {
+      font-size: var(--fs-small);
+      color: var(--color-text-muted);
+      display: inline-block;
+      margin-bottom: var(--space-md);
+      transition: color var(--transition);
+    }
+    .hero-back:hover { color: var(--color-text); }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: var(--fs-hero-title);
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: 0.88;
+      letter-spacing: -0.01em;
+    }
+    .hero-title .initial { color: var(--color-text); }
+    .hero-title .accent  { color: var(--color-accent); }
+    .hero-sub {
+      margin-top: var(--space-sm);
+      color: var(--color-text-muted);
+      font-size: 0.95rem;
+      max-width: 400px;
+    }
+    .hero-actions {
+      margin-top: var(--space-md);
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+
+    .integral-badge {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-top: 3px solid var(--color-accent);
+      border-radius: var(--radius-md);
+      padding: var(--space-lg) var(--space-md);
+      text-align: center;
+      max-width: 280px;
+      margin-left: auto;
+    }
+    .integral-badge-name {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 2.2rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-text);
+    }
+    .integral-badge-sub {
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-top: 4px;
+    }
+    .integral-badge-line {
+      width: 40px; height: 2px;
+      background: var(--color-accent);
+      margin: var(--space-sm) auto;
+    }
+    .integral-badge-desc {
+      font-size: 0.8rem;
+      color: var(--color-text-muted);
+      line-height: 1.5;
+    }
+
+    /* ---- CONTEÚDO ---- */
+    .section-content {
+      padding-block: var(--space-xl);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .section-content .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-lg);
+      align-items: start;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: var(--fs-section);
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: 1;
+      margin-bottom: var(--space-md);
+      display: inline-block;
+      border-bottom: 3px solid var(--color-accent);
+      padding-bottom: 6px;
+    }
+    .content-text {
+      border-left: 3px solid var(--color-accent);
+      padding-left: var(--space-md);
+    }
+    .text-block { display: flex; flex-direction: column; gap: 9px; margin-bottom: var(--space-md); }
+    .text-line  { height: 13px; background: var(); border-radius: 3px; }
+
+    .live-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1.5px solid var(--color-accent);
+      border-radius: var(--radius-sm);
+      padding: 6px 14px;
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+    }
+    .live-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--color-accent);
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity:1; transform:scale(1); }
+      50%      { opacity:.4; transform:scale(.8); }
+    }
+    .content-image {
+      width: 100%;
+      aspect-ratio: 4/5;
+      max-width: 360px;
+      margin-left: auto;
+    }
+
+    /* ---- CUPOM ---- */
+    .cupom-banner {
+      background: var(--color-accent);
+      padding-block: var(--space-md);
+      text-align: center;
+    }
+    .cupom-label {
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: var(--space-xs);
+    }
+    .cupom-code {
+      display: inline-block;
+      background: var(--color-bg);
+      color: var(--color-text);
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: clamp(1.5rem, 5vw, 2.2rem);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 0.5rem 2.5rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: background var(--transition);
+      user-select: all;
+    }
+    .cupom-code:hover { background: #1a1a1a; }
+    .cupom-hint { margin-top: 6px; font-size: 0.72rem; color: rgba(255,255,255,0.6); }
+
+    /* ---- PRODUTOS ---- */
+    .section-produtos {
+      padding-block: var(--space-xl);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .produto-item {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-lg);
+      align-items: center;
+      padding-block: var(--space-lg);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .produto-item:last-child { border-bottom: none; }
+
+    /* Produto 1: texto esq, imagem dir */
+    .produto-item.right .produto-info { order: 1; }
+    .produto-item.right .produto-flip { order: 2; }
+
+    /* Produto 2: imagem esq, texto dir + escadinha */
+    .produto-item.left .produto-flip { order: 1; }
+    .produto-item.left .produto-info { order: 2; }
+    .produto-item.left { margin-top: var(--space-lg); }
+
+    .produto-info {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .produto-tag {
+      display: inline-block;
+      border: 1.5px solid var(--color-accent);
+      color: var(--color-accent);
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+      width: fit-content;
+    }
+    .produto-name {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: 0.9;
+    }
+    .produto-desc {
+      color: var(--color-text-muted);
+      font-size: 0.9rem;
+      max-width: 380px;
+      line-height: 1.6;
+    }
+    .produto-cta { margin-top: var(--space-xs); }
+
+    /* Flip card */
+    .produto-flip {
+      perspective: 1000px;
+      max-width: 360px;
+      width: 100%;
+    }
+    .produto-item.right .produto-flip { margin-left: auto; }
+    .produto-item.left  .produto-flip { margin-right: auto; }
+
+    .flip-inner {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 3/4;
+      transform-style: preserve-3d;
+      transition: transform 0.55s cubic-bezier(0.4,0,0.2,1);
+      border-radius: var(--radius-md);
+    }
+    .produto-flip:hover .flip-inner { transform: rotateY(180deg); }
+
+    .flip-front,
+    .flip-back {
+      position: absolute;
+      inset: 0;
+      border-radius: var(--radius-md);
+      backface-visibility: hidden;
+      overflow: hidden;
+    }
+    .flip-front {
+      background: var(--color-image-bg);
+      border: 1px solid var(--color-border);
+    }
+    .flip-back {
+      background: var(--color-accent);
+      transform: rotateY(180deg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-sm);
+      padding: var(--space-md);
+    }
+
+    .flip-front .placeholder-inner {
+      width: 100%; height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding-bottom: var(--space-sm);
+      color: var(--color-text-subtle);
+      font-size: var(--fs-small);
+      gap: 4px;
+    }
+    .flip-front img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+
+    .flip-back-name {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 1.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #fff;
+      text-align: center;
+    }
+    .flip-back-detail {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.85);
+      text-align: center;
+      line-height: 1.6;
+    }
+    .flip-back-btn {
+      background: #fff;
+      color: var(--color-accent);
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.6rem 1.5rem;
+      border-radius: var(--radius-sm);
+      border: none;
+      cursor: pointer;
+      margin-top: var(--space-xs);
+      transition: opacity var(--transition);
+      text-decoration: none;
+    }
+    .flip-back-btn:hover { opacity: 0.85; }
+
+    .flip-hint {
+      font-size: 0.7rem;
+      color: var(--color-text-subtle);
+      text-align: center;
+      margin-top: 8px;
+      font-style: italic;
+      transition: opacity var(--transition);
+    }
+    .produto-flip:hover .flip-hint { opacity: 0; }
+
+    /* ---- QUOTE ---- */
+    .quote-banner {
+      background: var(--color-accent);
+      padding-block: var(--space-lg);
+      text-align: center;
+    }
+    .quote-text {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      color: #fff;
+    }
+    .quote-author {
+      margin-top: var(--space-sm);
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.7);
+    }
+
+    /* ---- PAGE NAV ---- */
+    .page-nav {
+      padding-block: var(--space-md);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .page-nav .container { display: flex; justify-content: space-between; }
+    .page-nav a {
+      font-size: var(--fs-small);
+      color: var(--color-text-muted);
+      transition: color var(--transition);
+    }
+    .page-nav a:hover { color: var(--color-text); }
+
+    /* ---- FOOTER ---- */
+    .footer { padding-block: var(--space-md); }
+    .footer .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+    .footer-brand {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 1.1rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .footer-copy { font-size: var(--fs-small); color: var(--color-text-muted); }
+    .footer-links { display: flex; gap: var(--space-md); list-style: none; }
+    .footer-links a {
+      font-size: var(--fs-small);
+      color: var(--color-text-subtle);
+      transition: color var(--transition);
+    }
+    .footer-links a:hover { color: var(--color-text-muted); }
+
+    /* ---- RESPONSIVO ---- */
+    @media (max-width: 768px) {
+      .hero .container,
+      .section-content .container,
+      .produto-item { grid-template-columns: 1fr; }
+      .produto-item.left,
+      .produto-item.right { margin-top: 0; }
+      .produto-item.right .produto-flip,
+      .produto-item.left  .produto-flip { margin: 0; max-width: 100%; order: 1; }
+      .produto-item.right .produto-info,
+      .produto-item.left  .produto-info { order: 2; }
+      .integral-badge { margin: 0; max-width: 100%; }
+      .content-image  { margin: 0; max-width: 100%; }
+      .nav-links      { display: none; }
+      .footer .container { flex-direction: column; text-align: center; }
+      .footer-links   { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="container">
+      <div class="nav-brand">Ganley<span class="tag-pill">Freak Season</span></div>
+      <ul class="nav-links">
+        <li><a href="polemicas.html">Polemicas</a></li>
+        <li><a href="Site-Ganley-2.html">Freak</a></li>
+        <li><a href="integral.html" class="active">Integral</a></li>
+        <li><a href="berzerk.html">Berzerk</a></li>
+        <li><a href="cff.html" class="btn-cff">CFF</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div>
+        <a href="Site-Ganley-2.html" class="hero-back">← Voltar a Freak</a>
+        <p class="eyebrow">Patrocínio Oficial</p>
+        <h1 class="hero-title">
+          <span class="initial">A</span><span class="accent">Integral</span>
+        </h1>
+        <p class="hero-sub">A marca que entende o que é ser freak de verdade. Sem pauta, sem filtro.</p>
+        <div class="hero-actions">
+          <a href="https://www.integralmedica.com.br/?utm_source=google&utm_medium=cpc&utm_campaign=22396590402_176669012399&utm_content=792691018745&utm_term=integral+medica&nemu_source=google&nemu_campaign=22396590402&nemu_adset=176669012399&nemu_content=792691018745&nemu_term=integral+medica&gad_source=1&gad_campaignid=22396590402&gclid=CjwKCAjwyYPOBhBxEiwAgpT8P1aWCDbf1vBmm4qzCF7SUBVhA9U5QulsDp8Cu3B2-1i0fmYH-pDvwBoCTNwQAvD_BwE" class="btn btn-primary" target="_blank">Ver Produtos</a>
+          <a href="#sobre" class="btn btn-outline">A parceria →</a>
+        </div>
+      </div>
+
+      <div class="integral-badge">
+        <p class="integral-badge-name">Integral</p>
+        <p class="integral-badge-sub">Médica</p>
+        <div class="integral-badge-line"></div>
+        <p class="integral-badge-desc">Patrocinador oficial<br>da Freak Season</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTEÚDO -->
+  <section class="section-content" id="sobre">
+    <div class="container">
+      <div class="content-text">
+        <h2 class="section-title">O começo</h2>
+        <div class="text-block">
+          <div class="text-line" style="width:100%">Disciplina pesada virou rotina diária, a rotina virou conteúdo que motivava milhares</div>
+          <div class="text-line" style="width:88%"></div>
+          <div class="text-line" style="width:95%">o lifestyle freak começou a crescer nas redes</div>
+         
+          <div class="text-line" style="width:96%">e o nome Ganley começou a ficar gigante</div>
+          
+          <div class="text-line" style="width:90%">a Integral viu a força da nova geração, e transformou o impacto dele em parceria</div>
+          <div class="text-line" style="width:60%"></div>
+        </div>
+        <div class="">
+          <span class=""></span>
+        </div>
+      </div>
+
+      <img src="integral nat.jpeg" class="content-image">
+      
+    </div>
+  </section>
+
+  <!-- CUPOM -->
+  <section class="cupom-banner">
+    <p class="cupom-label">Desconto exclusivo</p>
+    <p class="cupom-code"
+       onclick="navigator.clipboard.writeText('GANLEY'); this.textContent='COPIADO!'; setTimeout(()=>this.textContent='GANLEY',1500)">
+      GANLEY
+    </p>
+    <p class="cupom-hint">clique para copiar</p>
+  </section>
+
+  <!-- PRODUTOS -->
+  <section class="section-produtos" id="produtos">
+    <div class="container">
+      <p class="eyebrow"></p>
+      <h2 class="section-title">Produtos</h2>
+
+      <div>
+
+        <!--pre treino-->
+        <div class="produto-item right">
+          <div class="produto-info">
+            <span class=""></span>
+            <h3 class="produto-name">Pré Treino<br>Huger</h3>
+            <p class="produto-desc">
+              O Pré Treino que entrou na rotina sem convite. Ganley usa, Ganley indica. Sem enrolação.
+            </p>
+            <div class="produto-cta">
+              <a href="https://www.integralmedica.com.br/huger-pre-treino-320g/p" class="btn btn-primary" target="_blank">Comprar agora</a>
+            </div>
+          </div>
+        <!--img-->
+          <div class="produto-flip">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <img src="pre treino.jpeg">
+                <div class="placeholder-inner">produto frente.png</div>
+              </div>
+              <div class="flip-back">
+                <p class="flip-back-name">Pré Treino</p>
+                <p class="flip-back-detail">
+                  Black Widow · 320g<br>
+                  8g por dose<br>
+                  Sabor Black Widow
+                </p>
+                <a href="https://www.integralmedica.com.br/huger-pre-treino-320g/p" class="flip-back-btn" target="_blank">Comprar</a>
+              </div>
+            </div>
+            <p class="flip-hint">passe o mouse para ver</p>
+          </div>
+        </div>
+
+        <!-- Produto 2 — imagem à ESQUERDA + escadinha -->
+        <div class="produto-item left">
+          <div class="produto-flip">
+            <div class="flip-inner">
+              <div class="flip-front">
+               <img src="creatina - Copia.jpeg">
+                <div class="placeholder-inner">produto frente.png</div>>
+              </div>
+              <div class="flip-back">
+                <p class="flip-back-name">Creatina Creapure</p>
+                <p class="flip-back-detail">
+                  Creapure · 300g<br>
+                  5g por dose<br>
+                  Sem sabor
+                </p>
+                <a href="https://www.integralmedica.com.br/creatina-creapure-300g/p" class="flip-back-btn" target="_blank">Comprar</a>
+              </div>
+            </div>
+            <p class="flip-hint">passe o mouse para ver</p>
+          </div>
+
+          <div class="produto-info">
+            <span class=""></span>
+            <h3 class="produto-name">Creatina<br>Creapure</h3>
+            <p class="produto-desc">
+              A creatina que entrou no stack sem cerimônia. Pura, sem frescura. Freak de verdade não complica.
+            </p>
+            <div class="produto-cta">
+              <a href="https://www.integralmedica.com.br/creatina-creapure-300g/p" class="btn btn-primary" target="_blank">Comprar agora</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- QUOTE -->
+  <section class="quote-banner">
+    <div class="container">
+      <p class="quote-text">"A Integral entende o que é ser freak de verdade."</p>
+      <p class="quote-author">— Ganley, atleta patrocinado pela Integral Médica</p>
+    </div>
+  </section>
+
+  <!--direita esquerda-->
+  <nav class="page-nav">
+    <div class="container">
+      <a href="Site-Ganley-2.html">← Freak</a>
+      <a href="berzerk.html">Berzerk →</a>
+    </div>
+  </nav>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-brand">Ganley<span class="tag-pill">Freak Season</span></div>
+      <p class="footer-copy">© 2026 GANLEY — Souf.</p>
+      <ul class="footer-links">
+        <li><a href="Site-Ganley.html">Wake Wake</a></li>
+        <li><a href="Site-Ganley-2.html">Freak</a></li>
+        <li><a href="integral.html">Integral</a></li>
+        <li><a href="berzerk.html">Berzark</a></li>
+        <li><a href="cff.html">CFF</a></li>
+      </ul>
+    </div>
+  </footer>
+
+</body>
+</html>

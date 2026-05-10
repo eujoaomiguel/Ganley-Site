@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Berzerk × Ganley — Freak Season</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,700;0,800;0,900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       🎨 DESIGN TOKENS — edite aqui para customizar tudo
+       ============================================================ */
+    :root {
+      /* Cores */
+      --color-bg:           #f0ede8;        /* fundo principal (bege claro) */
+      --color-bg-dark:      #111111;        /* fundo escuro (hero, footer) */
+      --color-bg-card:      #e8e4de;        /* fundo dos cards */
+      --color-accent:       #e84040;        /* vermelho destaque */
+      --color-accent-hover: #c73232;
+      --color-text:         #111111;        /* texto principal */
+      --color-text-light:   #ffffff;        /* texto sobre fundo escuro */
+      --color-text-muted:   #888888;
+      --color-text-subtle:  #aaaaaa;
+      --color-price-old:    #aaaaaa;        /* preço riscado */
+      --color-border:       #d8d4ce;
+      --color-badge-bg:     #111111;        /* badge "Mais vendido" */
+      --color-badge-text:   #ffffff;
+      --color-btn-dark:     #111111;        /* botão comprar padrão */
+      --color-btn-dark-hover: #2a2a2a;
+
+      /* Tipografia */
+      --font-display: 'Barlow Condensed', sans-serif;
+      --font-body:    'Barlow', sans-serif;
+
+      /* Tamanhos */
+      --fs-nav:         0.85rem;
+      --fs-eyebrow:     0.75rem;
+      --fs-hero-title:  clamp(3.5rem, 10vw, 6.5rem);
+      --fs-hero-sub:    1rem;
+      --fs-banner:      0.9rem;
+      --fs-card-name:   1.1rem;
+      --fs-card-cat:    0.8rem;
+      --fs-price:       1rem;
+      --fs-small:       0.75rem;
+      --fs-footer-brand:1.3rem;
+
+      /* Espaçamentos */
+      --space-xs:  0.5rem;
+      --space-sm:  1rem;
+      --space-md:  2rem;
+      --space-lg:  4rem;
+      --space-xl:  5rem;
+
+      /* Layout */
+      --container-width: 1100px;
+      --container-pad:   1.5rem;
+      --nav-height:      64px;
+
+      /* Misc */
+      --radius-sm:  4px;
+      --radius-md:  10px;
+      --radius-lg:  14px;
+      --transition: 0.2s ease;
+    }
+
+    /* ============================================================
+       RESET & BASE
+       ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--color-bg);
+      color: var(--color-text);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { display: block; max-width: 100%; }
+    a   { color: inherit; text-decoration: none; }
+
+    /* ============================================================
+       UTILITÁRIOS
+       ============================================================ */
+    .container {
+      max-width: var(--container-width);
+      margin-inline: auto;
+      padding-inline: var(--container-pad);
+    }
+
+    .eyebrow {
+      font-family: var(--font-display);
+      font-size: var(--fs-eyebrow);
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      padding: 0.7rem 1.4rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      border: none;
+      width: 100%;
+      transition: background var(--transition), transform var(--transition);
+    }
+    .btn:active { transform: scale(0.97); }
+
+    .btn-dark {
+      background: var(--color-btn-dark);
+      color: #fff;
+    }
+    .btn-dark:hover { background: var(--color-btn-dark-hover); }
+
+    .btn-accent {
+      background: var(--color-accent);
+      color: #fff;
+    }
+    .btn-accent:hover { background: var(--color-accent-hover); }
+
+    .btn-nav-comprar {
+      background: var(--color-btn-dark);
+      color: #fff;
+      font-family: var(--font-display);
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      padding: 0.55rem 1.3rem;
+      border-radius: var(--radius-sm);
+      border: none;
+      cursor: pointer;
+      transition: background var(--transition);
+    }
+    .btn-nav-comprar:hover { background: var(--color-btn-dark-hover); }
+
+    /* Image placeholder */
+    .img-placeholder {
+      background: var(--color-bg-card);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      color: var(--color-text-subtle);
+      font-size: var(--fs-small);
+      text-align: center;
+      padding: var(--space-sm);
+    }
+
+    /* ============================================================
+       NAVBAR — fundo claro
+       ============================================================ */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      height: var(--nav-height);
+      background: var(--color-bg);
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      align-items: center;
+    }
+    .navbar .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+    .nav-brand {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 1.2rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-text);
+    }
+    .nav-brand span {
+      font-weight: 400;
+      color: var(--color-text-muted);
+      font-size: 0.9rem;
+      margin-left: 6px;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: var(--fs-nav);
+      color: var(--color-text-muted);
+      transition: color var(--transition);
+    }
+    .nav-links a:hover { color: var(--color-text); }
+
+    /* ============================================================
+       HERO — fundo escuro
+       ============================================================ */
+    .hero {
+      background: var(--color-bg-dark);
+      padding-block: var(--space-xl);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Linhas diagonais decorativas */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 60px,
+        rgba(255,255,255,0.015) 60px,
+        rgba(255,255,255,0.015) 62px
+      );
+      pointer-events: none;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: var(--fs-hero-title);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+      line-height: 0.9;
+      color: var(--color-text-light);
+      position: relative;
+    }
+
+    .hero-sub {
+      margin-top: var(--space-sm);
+      font-size: var(--fs-hero-sub);
+      color: var(--color-text-muted);
+      letter-spacing: 0.08em;
+      position: relative;
+    }
+
+    /* ============================================================
+       BANNER DE OFERTA
+       ============================================================ */
+    .offer-banner {
+      background: var(--color-accent);
+      padding-block: 0.9rem;
+      text-align: center;
+    }
+    .offer-banner p {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: var(--fs-banner);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #fff;
+    }
+
+    /* ============================================================
+       GRID DE PRODUTOS
+       ============================================================ */
+    .section-produtos {
+      padding-block: var(--space-lg);
+    }
+    .produtos-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-md);
+      align-items: start;
+    }
+
+    /* Card base */
+    .card {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--color-border);
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+    }
+
+    /* Card destaque (mais vendido) */
+    .card.featured {
+      border: 2px solid var(--color-text);
+      position: relative;
+      transform: scale(1.03);
+    }
+    .card.featured:hover { transform: scale(1.03) translateY(-4px); }
+
+    /* Badge "Mais vendido" */
+    .badge-mais-vendido {
+      position: absolute;
+      top: -16px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--color-badge-bg);
+      color: var(--color-badge-text);
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .card-img {
+      .card-img {
+  width: 100%;
+  aspect-ratio: 3/3.2;
+  object-fit: cover;    /* ← preenche sem distorcer */
+  object-position: center top;  /* ← foca na parte de cima (boa pra camisas) */
+}
+    }
+
+    .card-body {
+      padding: var(--space-sm) var(--space-sm) var(--space-md);
+      text-align: center;
+    }
+
+    .card-name {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: var(--fs-card-name);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .card-cat {
+      font-size: var(--fs-card-cat);
+      color: var(--color-text-muted);
+      margin-top: 2px;
+    }
+
+    .card-prices {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xs);
+      margin-top: var(--space-xs);
+      margin-bottom: var(--space-sm);
+    }
+
+    .price-old {
+      font-size: 0.85rem;
+      color: var(--color-price-old);
+      text-decoration: line-through;
+    }
+
+    .price-new {
+      font-size: var(--fs-price);
+      font-weight: 700;
+      color: var(--color-accent);
+    }
+
+    /* ============================================================
+       SEÇÃO IMAGEM PROMOÇÃO
+       ============================================================ */
+    .section-promo {
+      padding-bottom: var(--space-lg);
+    }
+    .promo-img {
+      width: 100%;
+      aspect-ratio: 16/5;     /* ← proporção do banner de promoção */
+      border-radius: var(--radius-md);
+      font-size: 0.8rem;
+    }
+    .promo-label {
+      font-family: var(--font-display);
+      font-size: var(--fs-eyebrow);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+    }
+
+    /* ============================================================
+       FOOTER — fundo escuro
+       ============================================================ */
+    .footer {
+      background: var(--color-bg-dark);
+      padding-block: var(--space-lg);
+      text-align: center;
+    }
+    .footer-brand {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: var(--fs-footer-brand);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-text-light);
+      margin-bottom: var(--space-xs);
+    }
+    .footer-copy {
+      font-size: var(--fs-small);
+      color: var(--color-text-muted);
+    }
+    .footer-producao {
+      font-size: var(--fs-small);
+      color: var(--color-text-muted);
+      margin-top: 4px;
+    }
+    .footer-back {
+      display: inline-block;
+      margin-top: var(--space-sm);
+      font-size: var(--fs-small);
+      color: var(--color-accent);
+      transition: opacity var(--transition);
+    }
+    .footer-back:hover { opacity: 0.75; }
+
+    /* ============================================================
+       RESPONSIVO
+       ============================================================ */
+    @media (max-width: 768px) {
+      .produtos-grid { grid-template-columns: 1fr; }
+      .card.featured  { transform: scale(1); }
+      .nav-links      { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       NAVBAR
+       ============================================================ -->
+  <nav class="navbar">
+    <div class="container">
+      <div class="nav-brand">
+        Berzerk <span>× Ganley</span>
+      </div>
+      <ul class="nav-links">
+
+        <li><a href="Site-Ganley.html">wake</a></li>
+
+         <li><a href="Site-Ganley-2.html">Freak</a></li>
+
+          <li><a href="integral.html">integral</a></li>
+          
+          <li><a href="berzerk.com.br/collections/freaky-season"target="_blank">Coleção</a></li>
+        <li><a href="https://berzerk.com.br/?utm_source=Google&utm_medium=cpc&utm_campaign=search_institucional&gad_source=1&gad_campaignid=21829451685&gbraid=0AAAAA-Zm5PUNKkmJh-j-emu60LM23tXyy&gclid=Cj0KCQjw8PDPBhCeARIsAOJwmWVyLdgN-ZmRkR8-RfykrxaqF-eBgsCAy0jWczU4_swfi4ElT53sGXgaAjHzEALw_wcB" class="btn-nav-comprar"target="_blank">Berzerk ofc</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!--h1-->
+  <section class="hero">
+    <div class="container">
+      <p class="eyebrow">Coleção Exclusiva</p>
+      <h1 class="hero-title">Freak Season</h1>
+      <p class="hero-sub">por Ganley × Berzerk</p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       BANNER DE OFERTA
+       ============================================================ -->
+  <div class="offer-banner">
+    <p>De R$ 179,90 por R$ 69,90 — Oferta Limitada</p>
+  </div>
+
+  <!--cards-->
+  <section class="section-produtos" id="produtos">
+    <div class="container">
+      <div class="produtos-grid">
+
+        <!-- Card 1 -->
+        <div class="card">
+          
+          <img src="dudu otario.png" alt="Wake Wake" class="card-img" style="object-fit: cover; width: 100%; height: 100%;">
+          <div class="card-body">
+            <p class="card-name">Get Freaky</p>
+            <p class="card-cat">Freak Season</p>
+            <div class="card-prices">
+              <span class="price-old">R$ 179,90</span>
+              <span class="price-new">R$ 69,90</span>
+            </div>
+            <a href="https://berzerk.com.br/products/oversized-exclusiva-freaky-off?_pos=3&_sid=4ec8735fc&_ss=r" class="btn btn-dark" target="_blank">Comprar</a>
+          </div>
+        </div>
+
+        <!-- Card 2 — DESTAQUE -->
+        <div class="card featured" style="position:relative;">
+          <span class="badge-mais-vendido">Mais vendido</span>
+          
+          <!--wake wake-->
+           <img src="camisa wake.png" alt="Wake Wake" class="card-img" style="object-fit: cover; width: 100%; height: 100%;">
+          
+          <div class="card-body">
+            <p class="card-name">Wake Wake</p>
+            <p class="card-cat">Freak Season</p>
+            <div class="card-prices">
+              <span class="price-old">R$ 179,90</span>
+              <span class="price-new">R$ 69,90</span>
+            </div>
+            <a href="https://berzerk.com.br/products/oversized-exclusiva-wake-wake?_pos=2&_sid=4ec8735fc&_ss=r" class="btn btn-accent"target="_blank">Comprar</a>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="card">
+          
+         <img src="camisa freak.png" alt="Wake Wake" class="card-img" style="object-fit: cover; width: 100%; height: 100%;">
+          <div class="card-body">
+            <p class="card-name">Thunder</p>
+            <p class="card-cat">Freak Season</p>
+            <div class="card-prices">
+              <span class="price-old">R$ 179,90</span>
+              <span class="price-new">R$ 69,90</span>
+            </div>
+            <a href="https://berzerk.com.br/products/oversized-exclusiva-get-freaky?_pos=1&_sid=4ec8735fc&_ss=r" class="btn btn-dark"target="_blank">Comprar</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!--promo-->
+  <section class="section-promo">
+    <div class="container">
+      <img src="promoçao.png" alt="Promoção" class="promo-img" >
+      
+        <span style="font-size:0.75rem; color: var(--color-text-subtle);"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-brand">Berzerk × Ganley</p>
+      <a href="https://www.instagram.com/eujoaomiguel.m/">
+      <p class="footer-copy">© 2026 Todos os direitos reservados a souf.</p>
+      </a>
+      <p class="footer-producao">Produção Souf · Para Ganley</p>
+      <a href="Site-Ganley.html" class="footer-back">← Voltar ao wake wake</a>
+    </div>
+  </footer>
+
+</body>
+</html>

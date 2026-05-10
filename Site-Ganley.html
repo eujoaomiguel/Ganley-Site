@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <link rel="stylesheet" href="regra.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ganley — Freak Season</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,700;0,800;0,900;1,400&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+   
+    :root {
+      /* Cores */
+      --color-bg:           #111111;        
+      --color-bg-secondary: #1a1a1a;        
+      --color-accent:       #e84040;        
+      --color-accent-hover: #c73232;        
+      --color-text:         #ffffff;        
+      --color-text-muted:   #888888;        
+      --color-text-subtle:  #555555;       
+      --color-border:       #2a2a2a;        
+      --color-image-bg:     #1e1e1e;        
+
+      /* Tipografia */
+      --font-display:  'Barlow Condensed', sans-serif;
+      --font-body:     'Barlow', sans-serif;
+
+      /* Tamanhos de fonte */
+      --fs-nav:        0.85rem;
+      --fs-eyebrow:    0.75rem;
+      --fs-hero-title: clamp(3.5rem, 10vw, 7rem);
+      --fs-section-title: clamp(2rem, 5vw, 3rem);
+      --fs-body:       1rem;
+      --fs-quote:      clamp(1.4rem, 3.5vw, 2.2rem);
+      --fs-small:      0.8rem;
+      --fs-footer-brand: 1.1rem;
+
+      /* Espaçamentos */
+      --space-xs:   0.5rem;
+      --space-sm:   1rem;
+      --space-md:   2rem;
+      --space-lg:   4rem;
+      --space-xl:   6rem;
+
+      /* Layout */
+      --container-width: 1100px;
+      --container-pad:   1.5rem;
+      --nav-height:      64px;
+
+      /* Bordas */
+      --radius-sm: 4px;
+      --radius-md: 8px;
+
+      /* Transições */
+      --transition: 0.2s ease;
+
+      
+      --tag-bg:    var(--color-accent);
+      --tag-color: #ffffff;
+    }
+
+   
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      font-family: var(--font-body);
+      font-size: var(--fs-body);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img { display: block; max-width: 100%; }
+    a   { color: inherit; text-decoration: none; }
+
+    
+    .container {
+      max-width: var(--container-width);
+      margin-inline: auto;
+      padding-inline: var(--container-pad);
+    }
+
+    .eyebrow {
+      font-family: var(--font-display);
+      font-size: var(--fs-eyebrow);
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+    }
+
+    .tag-pill {
+      display: inline-block;
+      background: var(--tag-bg);
+      color: var(--tag-color);
+      font-family: var(--font-display);
+      font-size: 0.6rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 3px 7px;
+      border-radius: var(--radius-sm);
+      vertical-align: middle;
+      margin-left: 6px;
+    }
+
+    /* Botões */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      font-family: var(--font-display);
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      padding: 0.75rem 1.5rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      border: none;
+      transition: background var(--transition), color var(--transition), transform var(--transition);
+    }
+    .btn:active { transform: scale(0.97); }
+
+    .btn-primary {
+      background: var(--color-accent);
+      color: #fff;
+    }
+    .btn-primary:hover { background: var(--color-accent-hover); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--color-text);
+      border: 1.5px solid var(--color-text-muted);
+    }
+    .btn-outline:hover { border-color: var(--color-text); }
+
+    .btn-cff {
+      background: transparent;
+      color: var(--color-accent);
+      border: 1.5px solid var(--color-accent);
+    }
+    .btn-cff:hover { background: var(--color-accent); color: #fff; }
+
+    /*imagem*/
+    .img-placeholder {
+      background: var(--color-image-bg);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: var(--space-sm);
+      color: var(--color-text-subtle);
+      font-family: var(--font-body);
+      font-size: var(--fs-small);
+      position: relative;
+      overflow: hidden;
+    }
+    .img-placeholder::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--color-accent);
+    }
+
+    /*barra de navegaçao*/
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      height: var(--nav-height);
+      background: var(--color-bg);
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .nav-brand {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 1.35rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--font-body);
+      font-size: var(--fs-nav);
+      color: var(--color-text-muted);
+      transition: color var(--transition);
+    }
+    .nav-links a:hover { color: var(--color-text); }
+
+   
+    .hero {
+      background: var(--color-bg-secondary);
+      border-bottom: 1px solid var(--color-border);
+      padding-block: var(--space-xl);
+    }
+
+    .hero .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-lg);
+      align-items: center;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: var(--fs-hero-title);
+      font-weight: 900;
+      line-height: 0.9;
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+    }
+
+   
+    .hero-title .initial  { color: var(--color-text); }
+    .hero-title .accent   { color: var(--color-accent); }
+
+    .hero-subtitle {
+      margin-top: var(--space-sm);
+      color: var(--color-text-muted);
+      font-size: 0.95rem;
+      max-width: 420px;
+    }
+
+    .hero-actions {
+      margin-top: var(--space-md);
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      align-items: center;
+    }
+
+    .hero-image {
+      width: 100%;
+      aspect-ratio: 4/3;
+      
+    }
+
+   /*essenciaaaaa*/
+    .section-essencia {
+      padding-block: var(--space-xl);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .section-essencia .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-lg);
+      align-items: start;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: var(--fs-section-title);
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: 1;
+      margin-bottom: var(--space-md);
+      /* Sublinhado accent */
+      display: inline-block;
+      border-bottom: 3px solid var(--color-accent);
+      padding-bottom: 6px;
+    }
+
+    /*textos*/
+    .text-block {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: var(--space-md);
+    }
+
+    .text-line {
+      height: 14px;
+      border-radius: 3px;
+    }
+
+    /* Tag de categoria */
+    .category-tag {
+      display: inline-block;
+      border: 1.5px solid var(--color-accent);
+      color: var(--color-accent);
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+      transition: background var(--transition), color var(--transition);
+      cursor: default;
+    }
+    .category-tag:hover { background: var(--color-accent); color: #fff; }
+
+    .section-image {
+      width: 100%;
+      aspect-ratio: 3/4;
+    }
+
+    /*filosofo piton*/
+    .quote-banner {
+      background: var(--color-accent);
+      padding-block: var(--space-lg);
+      text-align: center;
+    }
+
+    .quote-text {
+      font-family: var(--font-display);
+      font-size: var(--fs-quote);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      color: #fff;
+    }
+
+    .quote-author {
+      margin-top: var(--space-sm);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.75);
+    }
+
+    /*redes socias*/
+    .section-social {
+      padding-block: var(--space-lg);
+      background: var(--color-bg-secondary);
+    }
+
+    .section-social .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-md);
+    }
+
+    .social-eyebrow {
+      letter-spacing: 0.25em;
+    }
+
+    .social-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-sm);
+      width: 100%;
+      max-width: 700px;
+    }
+
+    .social-card {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-md) var(--space-sm);
+      text-align: center;
+      transition: border-color var(--transition), transform var(--transition);
+      cursor: pointer;
+    }
+    .social-card:hover {
+      border-color: var(--color-text-muted);
+      transform: translateY(-3px);
+    }
+
+    .social-card.highlighted {
+      border-color: var(--color-accent);
+    }
+    .social-card.highlighted:hover { border-color: var(--color-accent-hover); }
+
+    .social-name {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-text);
+    }
+    .social-card.highlighted .social-name { color: var(--color-accent); }
+
+    .social-handle {
+      font-size: var(--fs-small);
+      color: var(--color-text-muted);
+      margin-top: 4px;
+    }
+    .social-card.highlighted .social-handle { color: var(--color-text-muted); }
+
+   /*rodape*/
+    .footer {
+      border-top: 1px solid var(--color-border);
+      padding-block: var(--space-md);
+    }
+
+    .footer .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+
+    .footer-brand {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: var(--fs-footer-brand);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .footer-copy {
+      font-size: var(--fs-small);
+      color: var(--color-text-muted);
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: var(--space-md);
+      list-style: none;
+    }
+    .footer-links a {
+      font-size: var(--fs-small);
+      color: var(--color-text-muted);
+      transition: color var(--transition);
+    }
+    .footer-links a:hover { color: var(--color-text); }
+
+    
+    @media (max-width: 768px) {
+      .hero .container,
+      .section-essencia .container {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-image { aspect-ratio: 16/9; }
+
+      .nav-links { display: none; } 
+
+      .social-grid { grid-template-columns: 1fr; max-width: 340px; }
+
+      .footer .container { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!--barra de navegaçao-->
+  <nav class="navbar">
+    <div class="container">
+      <div class="nav-brand">
+        Ganley<span class="tag-pill">Freak Season</span>
+      </div>
+
+      <ul class="nav-links">
+        <li><a href="polemicas.html">Blog</a></li>
+        <li><a href="Site-Ganley-2.html">Freak</a></li>
+        <li><a href="integral.html">Integral</a></li>
+        <li><a href="berzerk.html">Berzerk</a></li>
+        <li><a href="cff.html" class="btn btn-cff" style="padding: 0.45rem 1rem; font-size: 0.75rem;">CFF</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <p class="eyebrow">Wake Wake</p>
+
+        <h1 class="hero-title">
+          <span class="initial">A</span><span class="accent">Essência</span>
+        </h1>
+
+        <p class="hero-subtitle">
+          Tudo sobre o Ganley, brigas, polemicas e sempre apoiando o bbzinho.
+        </p>
+
+        <div class="hero-actions">
+          <a href="https://www.instagram.com/p/DV9IoRCgF-F/" class="btn btn-primary" target="_blank">Ostentando BB</a>
+          <a href="Site-Ganley-2.html" class="btn btn-outline">Ir pro Freak →</a>
+        </div>
+      </div>
+
+     
+      <div class="img-placeholder hero-image">
+        
+        <img src="img-principal.png" width="65%" height="107%">
+        
+      </div>
+    </div>
+  </section>
+
+  
+  <section class="section-essencia">
+    <div class="container">
+      <div class="essencia-text">
+        <h2 class="section-title">A Essência</h2>
+
+        <!--textos-->
+        <div class="text-block">
+          <div class="text-line" style="width: 100%">a essência não é papo, é código de vida cravado na pele, não é fase nem modinha, é constância quando ninguém tá vendo</div>
+          <div class="text-line" style="width: 70%"></div>
+          <div class="text-line" style="width: 88%">não é só treino, é guerra diária, é levantar quebrado e ir mesmo assim, fazer o que precisa ser feito sem desculpa e sem atalho</div>
+           <div class="text-line" style="width: 85%"></div>
+          <div class="text-line" style="width: 95%">é um caminho duro, solitário e ingrato, que exige mente forte, disciplina de verdade e atitude todo santo dia</div>
+          <div class="text-line" style="width: 85%"></div>
+          <div class="text-line" style="width: 80%">quando você entra nisso de verdade, não tem mais como voltar atrás, vira quem você é</div>
+          <div class="text-line" style="width: 85%"></div>
+          <div class="text-line" style="width: 92%">e aí já era, só existe evolução</div>
+          
+         <!--botao-->
+        </div>
+      <a href="Site-Ganley-2.html">
+        <span class="category-tag">Freak Season</span >
+          </a>
+      </div>
+
+      <div class="img-placeholder section-image">
+        <img src="img-essencia.png">
+      </div>
+    </div>
+  </section>
+
+ <!--grande filosofo piton-->
+  <section class="quote-banner">
+    <div class="container">
+      <p class="quote-text">"É melhor fazer zerado com uma execução toda gagada do que certinho faltando uma placa pra zerar"</p>
+      <p class="quote-author">— Ganley bbzinho</p>
+    </div>
+  </section>
+
+  <!--redes sociais e cff-->
+  <section class="section-social">
+    <div class="container">
+      <p class="eyebrow social-eyebrow">Siga o Ganley</p>
+
+      <div class="social-grid">
+        <a href="https://youtube.com/@g_ganley" class="social-card" target="_blank" rel="noopener">
+          <p class="social-name">YouTube</p>
+          <p class="social-handle">@g_ganley</p>
+        </a>
+
+        <a href="https://instagram.com/ganleygabriel" class="social-card" target="_blank" rel="noopener">
+          <p class="social-name">Instagram</p>
+          <p class="social-handle">@ganleygabriel</p>
+        </a>
+
+        <a href="https://lastlink.com/p/C2D2A8516/checkout-payment" class="social-card highlighted" target="_blank">
+          <p class="social-name">Close Friends</p>
+          <p class="social-handle">Acesso exclusivo</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!--rodape-->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-brand">
+        Ganley<span class="tag-pill">Freak Season</span>
+      </div>
+    <a href="https://www.instagram.com/eujoaomiguel.m/" target="_blank">
+      <p class="footer-copy">© 2026 — Produção Souf</p>
+    </a>
+
+      <ul class="footer-links">
+        <li><a href="#">Wake Wake</a></li>
+        <li><a href="Site-Ganley-2.html">Freak</a></li>
+        <li><a href="integral.html">Integral</a></li>
+        <li><a href="be">Berzerk</a></li>
+        <li><a href="cff.html">CFF</a></li>
+      </ul>
+    </div>
+  </footer>
+
+</body>
+</html>
